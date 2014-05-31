@@ -11,7 +11,8 @@ This is a little side project that combines the applications learned in first ye
 	* Solve rotation and transformation matrices
  * **MSE101** - Introduction to Material Science
 	* Interpret different crystal structures in various angles
-
+ 
+ 
 	Additional but minor connections:
  * **MAT187** - Calculus II
 	* Using series to approximate sin and cosine
@@ -19,18 +20,21 @@ This is a little side project that combines the applications learned in first ye
 	* Control/display considers physical & psychological human factors
 
 How it combines multiple courses:
-	We are given a set of atom points for a particular face. We take a rotational matrix and compute new coordinates based on old ones. We find a couple of statements that is able to rotate any arbitrary point. We program these statements into the source code. We then rotate the set of atom points until the structure matches up with one of the given crystal structure face. Since there is already a function called rotate() which does this all automatically, the code is *low-level*.
+
+ > We are given a set of atom points for a particular face. We take a rotational matrix and compute new coordinates based on old ones. We find a couple of statements that is able to rotate any arbitrary point. We program these statements into the source code. We then rotate the set of atom points until the structure matches up with one of the given crystal structure face. Since there is already a function called rotate() which does this all automatically, the code is *low-level*.
 
 Plan:
- - [] Make buttons FCC[100], FCC[110], FCC[111], BCC[100], BCC[110], about
- - [] Encapsulate data points in a more organized fashion (separate file?)
- - [] Provide extensive commenting
- - [] Useful Aesthetics
-	- [] Turning greyed structures on and off
-	- [] Bring greyed structures in front, in back
-	- [] Switch between unit cells and lattices
- - [] Extra features
-	- [] Movement with arrow or WASD keys
+-----
+
+ - [ ] Make buttons FCC[100], FCC[110], FCC[111], BCC[100], BCC[110], about
+ - [ ] Encapsulate data points in a more organized fashion (separate file?)
+ - [ ] Provide extensive commenting
+ - [ ] Useful Aesthetics
+	- [ ] Turning greyed structures on and off
+	- [ ] Bring greyed structures in front, in back
+	- [ ] Switch between unit cells and lattices
+ - [ ] Extra features
+	- [ ] Movement with arrow or WASD keys
 	- [] Zooming with mouse wheel
 	- [] Snapping at key theta angles
  - [] Extra thought :: Give them data points to plot themselves and find out the structure
