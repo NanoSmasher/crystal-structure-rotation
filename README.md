@@ -26,15 +26,15 @@ How it combines multiple courses:
 Plan:
 -----
 
- - [ ] Make buttons FCC[100], FCC[110], FCC[111], BCC[100], BCC[110], about
- - [ ] Encapsulate data points in a more organized fashion (separate file?)
+ - [x] Make buttons FCC[100], FCC[110], FCC[111], BCC[100], BCC[110], about
+ - [x] Encapsulate data points in a more organized fashion (separate file?)
  - [ ] Provide extensive commenting
  - [ ] Useful Aesthetics
-	- [ ] Turning greyed structures on and off
-	- [ ] Bring greyed structures in front, in back
+	- [x] Turning greyed structures on and off
+	- [x] Bring greyed structures in front, in back
 	- [ ] Switch between unit cells and lattices
  - [ ] Extra features
 	- [ ] Movement with arrow or WASD keys
-	- [] Zooming with mouse wheel
-	- [] Snapping at key theta angles
- - [] Extra thought :: Give them data points to plot themselves and find out the structure
+	- [ ] Zooming with mouse wheel
+	- [x] Snapping at key theta angles
+ - [ ] Extra thought :: Give them data points to plot themselves and find out the structure
