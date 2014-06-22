@@ -93,3 +93,44 @@ function fcc111()
 	point[37]	= {x=150	,y=d+m	,g=1	}
 	return point
 end
+
+function bcc100()
+	local point = {}
+	a = 200/math.sqrt(3)
+	point[1]	= {x=0		,y=0		,v=1}
+	point[2]	= {x=a		,y=0		,v=1}
+	point[3]	= {x=-a		,y=0			}
+	point[4]	= {x=a		,y=a			}
+	point[5]	= {x=-a		,y=a			}
+	point[6]	= {x=a		,y=-a		,v=1}
+	point[7]	= {x=-a		,y=-a			}
+	point[8]	= {x=0		,y=a			}
+	point[9]	= {x=0		,y=-a		,v=1}
+	point[10]	= {x=2*a	,y=0			}
+	point[11]	= {x=2*a	,y=a			}
+	point[12]	= {x=2*a	,y=-a			}
+	point[13]	= {x=-a/2	,y=a/2	,g=1	}
+	point[14]	= {x=-a/2	,y=-a/2	,g=1	}
+	point[15]	= {x=a/2	,y=a/2	,g=1	}
+	point[16]	= {x=a/2	,y=-a/2	,g=1	}
+	point[17]	= {x=3*a/2	,y=a/2	,g=1	}
+	point[18]	= {x=3*a/2	,y=-a/2	,g=1	}
+	return point
+
+end
+
+function bcc110()
+	local point = {}
+	a = 200/math.sqrt(3)
+	d = math.sqrt(2)*200/math.sqrt(3)
+	point[1]	= {x=0		,y=0			}
+	point[2]	= {x=-d/2	,y=-a/2		,v=1}
+	point[3]	= {x=-d/2	,y=a/2		,v=1}
+	point[4]	= {x=d/2	,y=a/2		,v=1}
+	point[5]	= {x=d/2	,y=-a/2		,v=1}
+	point[6]	= {x=3*d/2	,y=a/2			}
+	point[7]	= {x=3*d/2	,y=-a/2			}
+	point[8]	= {x=d		,y=0			}	
+	return point
+
+end

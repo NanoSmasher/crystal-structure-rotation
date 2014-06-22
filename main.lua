@@ -20,14 +20,14 @@ function love.load()
 	
 	--buttons: FCC[100], FCC[110], FCC[111], BCC[100], BCC[110], grey, unit, about
 	button = {
-		{name = "fcc100",	x1 = 20,	y1 = 20,	x2 = 40,	y2 = 40},
-		{name = "fcc110",	x1 = 60,	y1 = 20,	x2 = 80,	y2 = 40},
-		{name = "fcc111",	x1 = 100,	y1 = 20,	x2 = 120,	y2 = 40},
-		{name = "bcc100",	x1 = 140,	y1 = 20,	x2 = 160,	y2 = 40},
-		{name = "bcc110",	x1 = 180,	y1 = 20,	x2 = 200,	y2 = 40},
-		{name = "grey",		x1 = 220,	y1 = 20,	x2 = 240,	y2 = 40},
-		{name = "unit",		x1 = 260,	y1 = 20,	x2 = 280,	y2 = 40},
-		{name = "about",	x1 = 300,	y1 = 20,	x2 = 320,	y2 = 40}
+		{name = "fcc100",	x1 = 10,	y1 = 20,	x2 = 70,	y2 = 40},
+		{name = "fcc110",	x1 = 80,	y1 = 20,	x2 = 140,	y2 = 40},
+		{name = "fcc111",	x1 = 150,	y1 = 20,	x2 = 210,	y2 = 40},
+		{name = "bcc100",	x1 = 220,	y1 = 20,	x2 = 280,	y2 = 40},
+		{name = "bcc110",	x1 = 290,	y1 = 20,	x2 = 350,	y2 = 40},
+		{name = "grey",		x1 = 360,	y1 = 20,	x2 = 420,	y2 = 40},
+		{name = "unit",		x1 = 430,	y1 = 20,	x2 = 490,	y2 = 40},
+		{name = "about",	x1 = 500,	y1 = 20,	x2 = 560,	y2 = 40}
 	}
 end
 
@@ -44,7 +44,8 @@ function love.mousepressed(x, y, b)
 			if (on=='fcc100') then point = fcc100()
 			elseif (on=='fcc110') then point = fcc110()
 			elseif (on=='fcc111') then point = fcc111()
-			 --[[WIP: rest of the faces]]--
+			elseif (on=='bcc100') then point = bcc100()
+			elseif (on=='bcc110') then point = bcc110()
 			elseif (on=='grey') then 
 				if draw_grey == -1 then draw_grey = 0
 				elseif draw_grey == 0 then draw_grey = 1
@@ -97,8 +98,14 @@ function love.update(dt)
 	for i=1,#point do
 		-- x' = x * cos(theta) - y * sin(theta)
 		-- y' = x * sin(theta) - y * cos(theta)
+		
+-- #######################################################################################################		
+		
 		newx = point[i].x*math.cos(theta) - point[i].y*math.sin(theta)		-- lines to code
 		newy = point[i].x*math.sin(theta) + point[i].y*math.cos(theta)		-- lines to code
+		
+-- #######################################################################################################				
+		
 		coord[i] = {x=newx, y=newy, g=point[i].g, u=point[i].u,v=point[i].v}
 	end
 	
