@@ -23,37 +23,32 @@ def updateunit():
     for i in range(len(original_BCC)):
         global theta_x,theta_y,theta_z,face
         x,y,z  = original_BCC[i]
-
 ########################################################
 ########################################################
 ##################### CODE BELOW #######################
-
-
-'''#####################################################
-	HELPFUL NOTES:
-
-    [1] Unlike C, Python space sensitive, meaning:
-this,
-    this,
-
-    have completely different meanings. So please do not change any indent/space in the code
-
-
-    [2] Use the following variables to help you code:
-
-        x : The point's original x location
-        y : The point's original y location
-        z : The point's original z location
-        theta_x : The radian to rotate in the x axis
-        theta_y : The radian to rotate in the y axis
-        theta_z : The radian to rotate in the z axis
-
-
-    [3] Use these functions to help you code:
-
-        math.cos([variable])
-        math.sin([variable])
-############################################################'''
+#	HELPFUL NOTES:
+#
+#   [1] Unlike C, Python space sensitive, meaning:
+#this,
+#   this,
+#
+#   have completely different meanings. So please do not alter any spacing.
+#
+#
+#   [2] Use the following variables to help you code:
+#
+#       x : The point's original x location
+#       y : The point's original y location
+#       z : The point's original z location
+#       theta_x : The radian to rotate in the x axis
+#       theta_y : The radian to rotate in the y axis
+#       theta_z : The radian to rotate in the z axis
+#
+#
+#   [3] Use these functions to help you code:
+#       math.cos([variable])
+#       math.sin([variable])
+############################################################
 
         # z-axis rotation
         newx = x*math.cos(theta_z) - y*math.sin(theta_z)    #CODE HERE
@@ -83,8 +78,7 @@ this,
 # Reposition spheres
 def drawunit():
     for i in range(len(original_BCC)):
-        global face
-        global unit
+        global face, unit
         unit[i].pos = face[i]
 
 # Make sure 0 < theta < 2*pi
@@ -107,13 +101,13 @@ def limit():
 while 1:
     key = scene.kb.getkey()
     if len(key) == 1:
-        if (key == 'a'): 
+        if (key == 'q'): 
             theta_x -= math.pi/12
-        elif (key == 's'): 
-            theta_x += math.pi/12
-        elif (key == 'q'): 
-            theta_y -= math.pi/12
         elif (key == 'w'): 
+            theta_x += math.pi/12
+        elif (key == 'a'): 
+            theta_y -= math.pi/12
+        elif (key == 's'): 
             theta_y += math.pi/12
         elif (key == 'z'): 
             theta_z -= math.pi/12
