@@ -28,13 +28,11 @@ Plan:
 
  - [x] Make buttons FCC[100], FCC[110], FCC[111], BCC[100], BCC[110], about
  - [x] Encapsulate data points in a more organized fashion (separate file?)
- - [ ] Provide extensive commenting
- - [ ] Useful Aesthetics
+ - [X] Provide extensive commenting
+ - [X] Useful Aesthetics
 	- [x] Turning greyed structures on and off
 	- [x] Bring greyed structures in front, in back
-	- [ ] Switch between unit cells and lattices
- - [ ] Extra features
-	- [ ] Movement with arrow or WASD keys
-	- [ ] Zooming with mouse wheel
+ - [x] Extra features
+	- [x] Rotation with mouse wheel
 	- [x] Snapping at key theta angles
  - [ ] Extra thought :: Give them data points to plot themselves and find out the structure
