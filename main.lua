@@ -25,14 +25,17 @@ function love.update(dt)
 #        y : The point's original y location
 #        theta : The radian to rotate in the 'z' axis
 #
-#    [3] Use these functions to help you code:
 #
-#        math.cos([variable])
-#        math.sin([variable])
+#    [2] Use these functions to help you code:
+#
+#        cos([variable])
+#        sin([variable])
+#
+#		 Both require radian input
 ]]		
 		
-		newx = x*math.cos(theta) - y*math.sin(theta)		-- lines to code
-		newy = x*math.sin(theta) + y*math.cos(theta)		-- lines to code
+		newx = x*cos(theta) - y*sin(theta)		-- lines to code
+		newy = x*sin(theta) + y*cos(theta)		-- lines to code
 		
 ---------------------CODE ABOVE-----------------------
 ------------------------------------------------------
@@ -213,4 +216,13 @@ function secondary_layer()
 			love.graphics.circle("fill",coord[i].x+origin, origin-coord[i].y,radius,64)
 		end
 	end
+end
+
+--misc to shorten function names
+function cos(theta)
+	return math.cos(theta)
+end
+
+function sin(theta)
+	return math.sin(theta)
 end

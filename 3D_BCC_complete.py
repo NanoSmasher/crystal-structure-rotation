@@ -1,4 +1,6 @@
 from visual import *
+from math import sin
+from math import cos
 
 # Disable default rotation
 scene.userspin = False
@@ -28,11 +30,11 @@ def updateunit():
 ##################### CODE BELOW #######################
 #	HELPFUL NOTES:
 #
-#   [1] Unlike C, Python space sensitive, meaning:
+#   [1] Unlike C, Python is space sensitive. Meaning:
 #this,
 #   this,
 #
-#   have completely different meanings. So please do not alter any spacing.
+#   can have completely different results. Please don't alter t spacing.
 #
 #
 #   [2] Use the following variables to help you code:
@@ -46,28 +48,31 @@ def updateunit():
 #
 #
 #   [3] Use these functions to help you code:
-#       math.cos([variable])
-#       math.sin([variable])
+#
+#       cos([variable])
+#       sin([variable])
+#
+#		Both require radian input
 ############################################################
 
         # z-axis rotation
-        newx = x*math.cos(theta_z) - y*math.sin(theta_z)    #CODE HERE
-        newy = x*math.sin(theta_z) + y*math.cos(theta_z)    #CODE HERE
-        newz = z                                            #CODE HERE
+        newx = x*cos(theta_z) - y*sin(theta_z)    #CODE HERE
+        newy = x*sin(theta_z) + y*cos(theta_z)    #CODE HERE
+        newz = z                                  #CODE HERE
 
         
-        x,y,z = newx,newy,newz                              #DO NOT TOUCH
+        x,y,z = newx,newy,newz                    #DO NOT TOUCH
         # y-axis rotation
-        newx = x*math.cos(theta_y) - z*math.sin(theta_y)    #CODE HERE
-        newy = y                                            #CODE HERE
-        newz = x*math.sin(theta_y) + z*math.cos(theta_y)    #CODE HERE
+        newx = x*cos(theta_y) - z*sin(theta_y)    #CODE HERE
+        newy = y                                  #CODE HERE
+        newz = x*sin(theta_y) + z*cos(theta_y)    #CODE HERE
 
         
-        x,y,z = newx,newy,newz                              #DO NOT TOUCH
+        x,y,z = newx,newy,newz                    #DO NOT TOUCH
         # x-axis rotation
-        newx = x                                            #CODE HERE
-        newy = y*math.cos(theta_x) - z*math.sin(theta_x)    #CODE HERE
-        newz = y*math.sin(theta_x) + z*math.cos(theta_x)    #CODE HERE
+        newx = x                                  #CODE HERE
+        newy = y*cos(theta_x) - z*sin(theta_x)    #CODE HERE
+        newz = y*sin(theta_x) + z*cos(theta_x)    #CODE HERE
 
 ##################### CODE ABOVE #######################
 ########################################################
@@ -77,25 +82,26 @@ def updateunit():
 
 # Reposition spheres
 def drawunit():
+    unit[1].color = color.red
     for i in range(len(original_BCC)):
         global face, unit
         unit[i].pos = face[i]
 
-# Make sure 0 < theta < 2*pi
+# Make sure -pi < theta < pi
 def limit():
     global theta_x,theta_y,theta_z
-    if (theta_x < 0):
-        theta_x = 0
-    if (theta_y < 0):
-        theta_y = 0    
-    if (theta_z < 0):
-        theta_z = 0
-    if (theta_x > 2*math.pi):
-        theta_x = 2*math.pi
-    if (theta_y > 2*math.pi):
-        theta_y = 2*math.pi
-    if (theta_z > 2*math.pi):
-        theta_z = 2*math.pi
+    if (theta_x < -math.pi):
+        theta_x = -math.pi
+    if (theta_y < -math.pi):
+        theta_y = -math.pi    
+    if (theta_z < -math.pi):
+        theta_z = -math.pi
+    if (theta_x > math.pi):
+        theta_x = math.pi
+    if (theta_y > math.pi):
+        theta_y = math.pi
+    if (theta_z > math.pi):
+        theta_z = math.pi
         
 #infinite loop to check for keyboard input
 while 1:
