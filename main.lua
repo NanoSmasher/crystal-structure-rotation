@@ -1,14 +1,21 @@
-require("data")
+--[[ LIST OF FUNCTIONS
+love.update(dt)		
+love.load()
+love.keyreleased(key)
+love.mousepressed(x, y, b)
+love.mousereleased()
+love.draw()
+sethover(getx, gety)
+locktheta()
+primary_layer()
+secondary_layer()
+getdata(file)
+]]--
 
 function love.update(dt)
-	local a = love.mouse.getX()
+	-- remove all previous values
 	for i=1,#coord do coord[i] = nil end
-
-	-- code for
-	if drag==1 and a>=size/12 and a<=size*11/12 then xzone = a - size/12 end
-	theta = xzone/scale*2*math.pi
-	locktheta()
-	
+	-- calculate new values
 	for i=1,#point do
 		local x = point[i].x
 		local y = point[i].y
@@ -42,9 +49,25 @@ function love.update(dt)
 		coord[i] = {x=newx, y=newy, g=point[i].g, u=point[i].u,v=point[i].v}
 	end
 	
+	
+	-- code for angle snapping
+	local mX = love.mouse.getX()
+	if drag==1 and mX>=size/12 and mX<=size*11/12 then xzone = mX - size/12 end
+	theta = xzone/scale*2*math.pi
+	locktheta()
+
+	-- code for getting the data files
+	filelist = {}
+	local cd = "/data"							-- current directory
+	local files = love.filesystem.getDirectoryItems(cd)
+	for i, file in ipairs(files) do			-- 'i' starts at 1 and increments, 'file' is the full name of the file
+		if string.find(file,".txt") then	-- if the file has the .txt extension
+			table.insert(filelist,file)		-- add it to the filelist
+		end
+	end
+
 end
 
--- initialize all variables and states
 function love.load()
 	size = 600
 	love.window.setTitle("Low-level rotations of Crystal structure faces")
@@ -55,62 +78,36 @@ function love.load()
 	drag = 0
 	theta = 0
 	point = {}
-	point = fcc100()
 	coord = {}
 	radius = 50
 	draw_grey = -1
-	draw_unit = 0
 	epilson = 0.1
-	
-	--buttons: FCC[100], FCC[110], FCC[111], BCC[100], BCC[110], grey, unit
-	button = {
-		{name = "fcc100",	x1 = 10,	y1 = 20,	x2 = 70,	y2 = 40},
-		{name = "fcc110",	x1 = 80,	y1 = 20,	x2 = 140,	y2 = 40},
-		{name = "fcc111",	x1 = 150,	y1 = 20,	x2 = 210,	y2 = 40},
-		{name = "bcc100",	x1 = 220,	y1 = 20,	x2 = 280,	y2 = 40},
-		{name = "bcc110",	x1 = 290,	y1 = 20,	x2 = 350,	y2 = 40},
-		{name = "grey",		x1 = 360,	y1 = 20,	x2 = 420,	y2 = 40},
-		{name = "unit",		x1 = 430,	y1 = 20,	x2 = 490,	y2 = 40}
-	}
+	button = {}
+	filelist = {}
 end
 
--- Hit the Escape key to quit program
 function love.keyreleased(key)
-	if key == "escape" then love.event.push("quit") end
+	if key == "escape" then love.event.push("quit") end -- Hit the Escape key to quit program
 end
 
 function love.mousepressed(x, y, b)
+	-- b == Left, WheelUp, WheelDown, Middle
 	if b == "l" then
 		if (math.sqrt((x-xzone)*(x-xzone)+(y-size*15/16)*(y-size*15/16))) < size/10  then
 			drag = 1 -- informs program user is over the theta slider
 		else
-			local on = sethover(x,y)
-			if (on=='fcc100') then point = fcc100()
-			elseif (on=='fcc110') then point = fcc110()
-			elseif (on=='fcc111') then point = fcc111()
-			elseif (on=='bcc100') then point = bcc100()
-			elseif (on=='bcc110') then point = bcc110()
-			elseif (on=='grey') then 
-				if draw_grey == -1 then draw_grey = 0
-				else  draw_grey = draw_grey == 0 and 1 or -1 -- Please, please don't ask
-				end
-				
-			elseif (on=='unit') then draw_unit = draw_unit == 0 and 1 or 0 -- I said don't ask
-			end
+			local name = sethover(x,y) -- gets the name of the file name it is hovering over
+			if name then point = getdata(name) or point end -- and loads it into the program
 		end
-	end
-	
-	if b == "wu" then
+	elseif b == "wu" then
 		xzone = xzone + 10
 		if xzone > size*5/6 then xzone = size*5/6 end
 		locktheta()
-	end
-	if b == "wd" then
+	elseif b == "wd" then
 		xzone = xzone - 10
 		if xzone < 0 then xzone = 0 end
 		locktheta()
-	end
-	if b == "m" then
+	elseif b == "m" then
 		if draw_grey == -1 then draw_grey = 0
 		elseif draw_grey == 0 then draw_grey = 1
 		else  draw_grey = -1
@@ -118,19 +115,9 @@ function love.mousepressed(x, y, b)
 	end
 end
 
--- See what button the user is hovering over. Returns 'none' if user isn't hovering over any.
-function sethover(getx,gety)
-	for i = 1, #button do
-		if (getx>=button[i].x1 and getx<=button[i].x2 and gety>=button[i].y1 and gety<=button[i].y2) then
-			return button[i].name
-		end
-	end
-	return 'none'
-end
-
--- To tell the program that the user no longer want to move the theta slider
 function love.mousereleased()
-   drag = 0
+   drag = 0 -- Tell the program that the user no longer want to move the theta slider
+
 end
 
 function love.draw()
@@ -160,20 +147,7 @@ function love.draw()
 	else
 		primary_layer()
 	end
-	
-	-- ORANGE BOUNDS
-	if draw_unit == 1 then
-		bound = {}
-		for i=1,#coord do
-			if coord[i].v==1 then
-				table.insert(bound, coord[i].x+origin)
-				table.insert(bound, origin-coord[i].y)
-			end
-		end
-		love.graphics.setColor(255,100,100)
-		love.graphics.polygon('line',bound)
-	end
-	
+
 	-- SLIDER
 	love.graphics.setColor(255,255,255)
 	love.graphics.line(size/12,size*15/16,size*11/12,size*15/16)
@@ -181,14 +155,29 @@ function love.draw()
 	love.graphics.print("theta = "..theta*180/math.pi,size*13/16,size*31/32)
 	
 	-- BUTTONS
-	love.graphics.setColor(255,200,100)
-	for i=1,#button do
-		love.graphics.rectangle("fill",button[i].x1,button[i].y1,button[i].x2-button[i].x1,button[i].y2-button[i].y1)
+	local a = 10
+	for i=1, #filelist do
+		love.graphics.setColor(255,200,100)
+		love.graphics.rectangle("fill",10,a,6.7*(#filelist[i]-4)+12,18)
+		love.graphics.setColor(0,0,0)
+		love.graphics.print(string.sub(filelist[i],1,#filelist[i]-4),15,a+2)
+		a = a + 20
 	end
 end
 
--- snap theta to specific angles
+function sethover(getx,gety)
+	-- If the mouse is hovering over a file, return the name of the file. Otherwise return nil
+	local a = 10
+	for i = 1, #filelist do
+		if (getx>=10 and getx<=6.7*(#filelist[i]-4)+22 and gety>=a and gety<=a+18) then
+			return filelist[i] 
+		else a = a + 20 end
+	end
+	return nil
+end
+
 function locktheta()
+	-- snap theta to specific angles
 	if theta > 1*math.pi/4 - epilson and theta < 1*math.pi/4 + epilson then theta = 1*math.pi/4 end
 	if theta > 2*math.pi/4 - epilson and theta < 2*math.pi/4 + epilson then theta = 2*math.pi/4 end
 	if theta > 3*math.pi/4 - epilson and theta < 3*math.pi/4 + epilson then theta = 3*math.pi/4 end
@@ -198,8 +187,8 @@ function locktheta()
 	if theta > 7*math.pi/4 - epilson and theta < 7*math.pi/4 + epilson then theta = 7*math.pi/4 end
 end
 
--- Draw white circles
 function primary_layer()
+	-- Draw white circles
 	for i=1,#coord do
 		if coord[i].g ~= 1 then
 			love.graphics.setColor(255,255,255)
@@ -208,8 +197,8 @@ function primary_layer()
 	end
 end
 
--- Draw grey circles
 function secondary_layer()
+	-- Draw grey circles
 	for i=1,#coord do
 		if coord[i].g==1 then 
 			love.graphics.setColor(200,200,200,150)
@@ -218,11 +207,40 @@ function secondary_layer()
 	end
 end
 
---misc to shorten function names
-function cos(theta)
-	return math.cos(theta)
+function getdata(file)
+	if not love.filesystem.isFile("/data/"..file) then return nil end
+	-- If it is not a file, don't do anything
+
+	local temp = {}	-- stores our current list of points
+	local grey = -1	-- number of points to assign to grey 
+	local num = 0	-- counter
+	
+	-- iterate over each line in the file
+	for line in love.filesystem.lines("/data/"..file) do
+		if line ~= "\n" then
+			if grey == -1 then -- If this is the first line of code, read the number of grey units.
+				grey = tonumber(line)
+				if not grey then return nil end -- if there was no number to read, the file is bad
+			else
+				num = num+1
+				-- break the comma separated values (CSV) into two points
+				local comma = string.find(line,",")
+				local x1 = tonumber(string.sub(line,1,comma-1))
+				local y1 = tonumber(string.sub(line,comma+1))
+
+				-- add the points to temp, assigning them either as grey or not-grey.
+				if num <= grey then
+					table.insert(temp, {x=x1, y=y1,g=1})
+				else
+					table.insert(temp, {x=x1, y=y1,g=0})
+				end
+
+			end
+		end
+	end
+
+	return temp
 end
 
-function sin(theta)
-	return math.sin(theta)
-end
+function cos(x) return math.cos(x) end	-- shorten calls to match with the C syntax
+function sin(x) return math.sin(x) end	-- shorten calls to match with the C syntax
