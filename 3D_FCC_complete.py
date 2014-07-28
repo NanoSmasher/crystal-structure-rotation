@@ -11,20 +11,20 @@ theta_y = 0
 theta_z = 0
 face = []
 unit = []
-r = 2/math.sqrt(3)
-original_BCC = [(0,0,0),(r,r,r),(-r,r,r),(r,-r,r),(r,r,-r),(-r,-r,r),(-r,r,-r),(r,-r,-r),(-r,-r,-r),(2*r,0,0),(3*r,-r,-r),(3*r,r,-r)]
+a = math.sqrt(2)
+original_FCC = [(0,0,0),(0,a,a),(-2*a,0,0),(-a,0,a),(-a,0,-a),(0,-a,a),(0,-a,-a),(-2*a,-a,-a),(-a,-a,0),(-a,a,0),(-2*a,a,a),(-2*a,a,-a),(0,a,-a),(a,a,0),(a,-a,0),(a,0,-a),(a,0,-a),(2*a,a,-a),(2*a,-a,-a)]
 
 # Create initial spheres
-for i in range(len(original_BCC)):
-    face.append(original_BCC[i])
+for i in range(len(original_FCC)):
+    face.append(original_FCC[i])
     unit.append(sphere (pos=face[i], radius=1, color=color.white))
 
 # create new set of coordinates due to a change in theta
 def updateunit():
     limit()
-    for i in range(len(original_BCC)):
+    for i in range(len(original_FCC)):
         global theta_x,theta_y,theta_z,face
-        x,y,z  = original_BCC[i]
+        x,y,z  = original_FCC[i]
         newx,newy,newz = 0,0,0
 ########################################################
 ########################################################
@@ -84,7 +84,7 @@ def updateunit():
 # Reposition spheres
 def drawunit():
     unit[1].color = color.red
-    for i in range(len(original_BCC)):
+    for i in range(len(original_FCC)):
         global face, unit
         unit[i].pos = face[i]
 

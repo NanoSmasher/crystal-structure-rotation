@@ -46,6 +46,8 @@ function love.update(dt)
 		
 ---------------------CODE ABOVE-----------------------
 ------------------------------------------------------
+		newx = newx or 0
+		newy = newy or 0
 		coord[i] = {x=newx, y=newy, g=point[i].g, u=point[i].u,v=point[i].v}
 	end
 	
